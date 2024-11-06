@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Functions Demo</title>
+</head>
+<body>
+    <h1>JavaScript Functions Demo</h1>
+
+    <h2>String Manipulation Functions</h2>
+    <div>
+        <h3>Reverse a String</h3>
+        <input type="text" id="reverseInput" placeholder="Enter a string">
+        <button onclick="showResult('reverse')">Reverse</button>
+        <p id="reverseResult"></p>
+    </div>
+    
+    <div>
+        <h3>Count Characters</h3>
+        <input type="text" id="countInput" placeholder="Enter a string">
+        <button onclick="showResult('count')">Count</button>
+        <p id="countResult"></p>
+    </div>
+    
+    <div>
+        <h3>Capitalize Words</h3>
+        <input type="text" id="capitalizeInput" placeholder="Enter a sentence">
+        <button onclick="showResult('capitalize')">Capitalize</button>
+        <p id="capitalizeResult"></p>
+    </div>
+
+    <h2>Array Functions</h2>
+    <div>
+        <h3>Find Maximum</h3>
+        <input type="text" id="maxInput" placeholder="Enter numbers separated by commas">
+        <button onclick="showResult('max')">Find Maximum</button>
+        <p id="maxResult"></p>
+    </div>
+    
+    <div>
+        <h3>Find Minimum</h3>
+        <input type="text" id="minInput" placeholder="Enter numbers separated by commas">
+        <button onclick="showResult('min')">Find Minimum</button>
+        <p id="minResult"></p>
+    </div>
+    
+    <div>
+        <h3>Sum of Array</h3>
+        <input type="text" id="sumInput" placeholder="Enter numbers separated by commas">
+        <button onclick="showResult('sum')">Sum</button>
+        <p id="sumResult"></p>
+    </div>
+    
+    <div>
+        <h3>Filter Array</h3>
+        <input type="text" id="filterInput" placeholder="Enter numbers separated by commas">
+        <input type="text" id="filterCondition" placeholder="Enter condition (e.g., num => num % 2 !== 0)">
+        <button onclick="showResult('filter')">Filter</button>
+        <p id="filterResult"></p>
+    </div>
+
+    <h2>Mathematical Functions</h2>
+    <div>
+        <h3>Factorial</h3>
+        <input type="number" id="factorialInput" placeholder="Enter a number">
+        <button onclick="showResult('factorial')">Calculate Factorial</button>
+        <p id="factorialResult"></p>
+    </div>
+    
+    <div>
+        <h3>Prime Number Check</h3>
+        <input type="number" id="primeInput" placeholder="Enter a number">
+        <button onclick="showResult('prime')">Check Prime</button>
+        <p id="primeResult"></p>
+    </div>
+    
+    <div>
+        <h3>Fibonacci Sequence</h3>
+        <input type="number" id="fibonacciInput" placeholder="Enter number of terms">
+        <button onclick="showResult('fibonacci')">Generate Fibonacci</button>
+        <p id="fibonacciResult"></p>
+    </div>
+
+    <script>
+        // String Manipulation Functions
+        function reverseString(str) {
+            return str.split('').reverse().join('');
+        }
+
+        function countCharacters(str) {
+            return str.length;
+        }
+
+        function capitalizeWords(sentence) {
+            return sentence.split(' ')
+                           .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                           .join(' ');
+        }
+
+        // Array Functions
+        function findMaximum(arr) {
+            return Math.max(...arr);
+        }
+
+        function findMinimum(arr) {
+            return Math.min(...arr);
+        }
+
+        function sumArray(arr) {
+            return arr.reduce((sum, num) => sum + num, 0);
+        }
+
+        function filterArray(arr, condition) {
+            return arr.filter(condition);
+        }
+
+        // Mathematical Functions
+        function factorial(n) {
+            if (n < 0) return undefined;
+            return n === 0 ? 1 : n * factorial(n - 1);
+        }
+
+        function isPrime(num) {
+            if (num <= 1) return false;
+            for (let i = 2; i <= Math.sqrt(num); i++) {
+                if (num % i === 0) return false;
+            }
+            return true;
+        }
+
+        function fibonacci(n) {
+            const fib = [0, 1];
+            for (let i = 2; i < n; i++) {
+                fib[i] = fib[i - 1] + fib[i - 2];
+            }
+            return fib.slice(0, n);
+        }
+
+        // Show Result Function
+        function showResult(type) {
+            let input, result;
+            switch (type) {
+                case 'reverse':
+                    input = document.getElementById('reverseInput').value;
+                    result = reverseString(input);
+                    document.getElementById('reverseResult').innerText = result;
+                    break;
+                case 'count':
+                    input = document.getElementById('countInput').value;
+                    result = countCharacters(input);
+                    document.getElementById('countResult').innerText = result;
+                    break;
+                case 'capitalize':
+                    input = document.getElementById('capitalizeInput').value;
+                    result = capitalizeWords(input);
+                    document.getElementById('capitalizeResult').innerText = result;
+                    break;
+                case 'max':
+                    input = document.getElementById('maxInput').value.split(',').map(Number);
+                    result = findMaximum(input);
+                    document.getElementById('maxResult').innerText = result;
+                    break;
+                case 'min':
+                    input = document.getElementById('minInput').value.split(',').map(Number);
+                    result = findMinimum(input);
+                    document.getElementById('minResult').innerText = result;
+                    break;
+                case 'sum':
+                    input = document.getElementById('sumInput').value.split(',').map(Number);
+                    result = sumArray(input);
+                    document.getElementById('sumResult').innerText = result;
+                    break;
+                case 'filter':
+                    input = document.getElementById('filterInput').value.split(',').map(Number);
+                    const condition = eval(document.getElementById('filterCondition').value); // Caution: eval can be risky
+                    result = filterArray(input, condition);
+                    document.getElementById('filterResult').innerText = result;
+                    break;
+                case 'factorial':
+                    input = Number(document.getElementById('factorialInput').value);
+                    result = factorial(input);
+                    document.getElementById('factorialResult').innerText = result;
+                    break;
+                case 'prime':
+                    input = Number(document.getElementById('primeInput').value);
+                    result = isPrime(input);
+                    document.getElementById('primeResult').innerText = result;
+                    break;
+                case 'fibonacci':
+                    input = Number(document.getElementById('fibonacciInput').value);
+                    result = fibonacci(input);
+                    document.getElementById('fibonacciResult').innerText = result.join(', ');
+                    break;
+            }
+        }
+    </script>
+</body>
+</html>
